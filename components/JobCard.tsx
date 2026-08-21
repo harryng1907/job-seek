@@ -7,18 +7,28 @@ import {
   ExternalLink,
   GraduationCap,
   MapPin,
+  Clock3,
+  Footprints,
   Minus,
   Plus,
   ShieldAlert,
   ShieldCheck,
   Sparkle,
   TimerReset,
+  Zap,
 } from "lucide-react";
 import { Badge, MetaChip, PriorityBadge, StatusBadge } from "@/components/ui/Badge";
 import { FitScore } from "@/components/ui/FitScore";
 import { QuickStatusActions } from "@/components/StatusControls";
 import { describeDeadline, formatDay, formatSalary } from "@/lib/format";
-import { ELIGIBILITY_META, blockerReason, isIneligible } from "@/lib/job-meta";
+import {
+  EFFORT_META,
+  ELIGIBILITY_META,
+  SCORE_META,
+  TRACK_META,
+  blockerReason,
+  isIneligible,
+} from "@/lib/job-meta";
 import { isNewToday } from "@/lib/jobs";
 import type { ApplicationStatus, TrackedJob } from "@/types/application";
 
@@ -72,6 +82,9 @@ export function JobCard({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
+            <Badge className={TRACK_META[job.track].className}>
+              {TRACK_META[job.track].label}
+            </Badge>
             <StatusBadge status={job.state.status} />
             <PriorityBadge priority={job.priority} />
             {job.state.waitingOn ? (
@@ -137,7 +150,12 @@ export function JobCard({
           </div>
         </div>
 
-        <FitScore score={job.fitScore} chance={job.chance} />
+        <FitScore
+          score={job.fitScore}
+          chance={job.chance}
+          label={SCORE_META[job.track].label}
+          title={SCORE_META[job.track].description}
+        />
       </div>
 
       {/* Eligibility — hard blockers read differently from soft preferences. */}
@@ -158,17 +176,44 @@ export function JobCard({
             ? " (hard requirement)"
             : ""}
         </MetaChip>
-        <MetaChip
-          icon={<GraduationCap className="h-3 w-3 shrink-0" />}
-          className={ELIGIBILITY_META[job.gradeRequirement.level].className}
-          title={job.gradeRequirement.note}
-        >
-          Grades: {ELIGIBILITY_META[job.gradeRequirement.level].label}
-          {!job.gradeRequirement.hardRequirement &&
-          job.gradeRequirement.level !== "eligible"
-            ? " (preferred)"
-            : ""}
-        </MetaChip>
+        {/* Part-time roles are judged on practicalities, not on grades. */}
+        {job.partTime ? (
+          <>
+            <MetaChip
+              icon={<Footprints className="h-3 w-3 shrink-0" />}
+              title="Commute"
+              nowrap={false}
+            >
+              {job.partTime.commute}
+            </MetaChip>
+            <MetaChip
+              icon={<Clock3 className="h-3 w-3 shrink-0" />}
+              title="Shift pattern"
+              nowrap={false}
+            >
+              {job.partTime.shiftPattern}
+            </MetaChip>
+            <MetaChip
+              icon={<Zap className="h-3 w-3 shrink-0" />}
+              className={EFFORT_META[job.partTime.applicationEffort].className}
+              title={job.partTime.experienceRequired}
+            >
+              {EFFORT_META[job.partTime.applicationEffort].label}
+            </MetaChip>
+          </>
+        ) : (
+          <MetaChip
+            icon={<GraduationCap className="h-3 w-3 shrink-0" />}
+            className={ELIGIBILITY_META[job.gradeRequirement.level].className}
+            title={job.gradeRequirement.note}
+          >
+            Grades: {ELIGIBILITY_META[job.gradeRequirement.level].label}
+            {!job.gradeRequirement.hardRequirement &&
+            job.gradeRequirement.level !== "eligible"
+              ? " (preferred)"
+              : ""}
+          </MetaChip>
+        )}
       </div>
 
       {/* The most important content stays visible without opening the job. */}

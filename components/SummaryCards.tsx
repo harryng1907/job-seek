@@ -1,7 +1,7 @@
 "use client";
 
 import { STATUS_META } from "@/lib/job-meta";
-import type { SummaryCounts, TabId } from "@/lib/jobs";
+import type { SummaryCounts, TabId, ViewId } from "@/lib/jobs";
 
 interface CardSpec {
   key: keyof SummaryCounts;
@@ -54,7 +54,7 @@ export function SummaryCards({
   onSelect,
 }: {
   counts: SummaryCounts;
-  activeTab: TabId;
+  activeTab: ViewId;
   onSelect: (tab: TabId) => void;
 }) {
   return (

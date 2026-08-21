@@ -4,7 +4,7 @@ import { isClosed } from "@/lib/application-state";
 import { daysBetween, toISODate } from "@/lib/format";
 import { PRIORITY_ORDER, isIneligible } from "@/lib/job-meta";
 import type { ApplicationStateMap, ApplicationStatus, TrackedJob } from "@/types/application";
-import type { JobBoard } from "@/types/job";
+import type { JobBoard, JobTrack } from "@/types/job";
 
 /**
  * Data access + the selectors the dashboard renders from.
@@ -42,6 +42,34 @@ export const TABS: { id: TabId; label: string }[] = [
   { id: "interview", label: "Interview" },
   { id: "archive", label: "Archive" },
 ];
+
+/** Top-level views: the pipeline tabs plus the CV builder, which has no jobs. */
+export type ViewId = TabId | "cv-builder";
+
+/** Track selector above the tabs. "all" shows both searches together. */
+export type TrackView = "all" | JobTrack;
+
+export const TRACK_VIEWS: { id: TrackView; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "graduate", label: "Graduate" },
+  { id: "part-time", label: "Part-time" },
+];
+
+export function filterByTrack(jobs: TrackedJob[], track: TrackView): TrackedJob[] {
+  return track === "all" ? jobs : jobs.filter((job) => job.track === track);
+}
+
+export function trackViewCounts(jobs: TrackedJob[]): Record<TrackView, number> {
+  return {
+    all: jobs.length,
+    graduate: jobs.filter((job) => job.track === "graduate").length,
+    "part-time": jobs.filter((job) => job.track === "part-time").length,
+  };
+}
+
+export function isPipelineTab(view: ViewId): view is TabId {
+  return view !== "cv-builder";
+}
 
 /** Which manual statuses each tab collects. `today` is computed separately. */
 const TAB_STATUSES: Record<Exclude<TabId, "today">, ApplicationStatus[]> = {

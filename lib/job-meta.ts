@@ -1,5 +1,12 @@
 import type { ApplicationStatus } from "@/types/application";
-import type { Chance, EligibilityLevel, Job, Priority } from "@/types/job";
+import type {
+  ApplicationEffort,
+  Chance,
+  EligibilityLevel,
+  Job,
+  JobTrack,
+  Priority,
+} from "@/types/job";
 
 /**
  * Presentation metadata: labels, ordering and Tailwind classes for each enum
@@ -87,6 +94,44 @@ export const PRIORITY_ORDER: Record<Priority, number> = {
   "worth-applying": 1,
   maybe: 2,
   skip: 3,
+};
+
+export const TRACK_META: Record<JobTrack, BadgeStyle> = {
+  graduate: {
+    label: "Graduate",
+    className: "border-indigo-500/25 bg-indigo-500/10 text-indigo-300",
+  },
+  "part-time": {
+    label: "Part-time",
+    className: "border-cyan-500/25 bg-cyan-500/10 text-cyan-300",
+  },
+};
+
+/**
+ * What the 0–10 score means on each track.
+ *
+ * The two are scored on different criteria and are never comparable — a
+ * part-time 9 is "easy to get, close, flexible", a graduate 9 is "strong career
+ * fit". The label changes with the track so the number is never read as one
+ * shared ranking.
+ */
+export const SCORE_META: Record<JobTrack, { label: string; description: string }> = {
+  graduate: {
+    label: "Career fit",
+    description:
+      "Scored on career fit: relevance to Data Science / AI / Analytics, skills match, progression and the strength of the application.",
+  },
+  "part-time": {
+    label: "Suitability",
+    description:
+      "Scored on practicality: commute, realistic availability around classes, hourly pay, casual/part-time status, weekend and evening flexibility, application speed, and whether prior retail experience is required.",
+  },
+};
+
+export const EFFORT_META: Record<ApplicationEffort, BadgeStyle> = {
+  quick: { label: "Quick apply", className: "text-emerald-300" },
+  standard: { label: "Standard application", className: "text-zinc-300" },
+  long: { label: "Long application", className: "text-amber-300" },
 };
 
 export const CHANCE_META: Record<Chance, BadgeStyle> = {

@@ -158,4 +158,56 @@ export const seedApplicationState: ApplicationStateMap = {
       updatedAt: "2026-08-18T11:20:00+10:00",
     },
   ),
+
+  // --- Part-time / income track -------------------------------------------
+
+  "arc-unsw-retail-assistant": createApplicationState("arc-unsw-retail-assistant", {
+    status: "new",
+    notes:
+      "Best part-time option: on campus, already an Arc volunteer, quick application. Closes 28 Aug.",
+    history: [{ status: "new", date: "2026-08-21", note: "Added by daily run." }],
+    updatedAt: "2026-08-21T08:15:00+10:00",
+  }),
+
+  "woolworths-campsie-customer-service": createApplicationState(
+    "woolworths-campsie-customer-service",
+    {
+      status: "to-apply",
+      notes:
+        "Ten minutes from home and guaranteed hours. Check the roster against class times before accepting — 20 hrs/week is close to the 48-hour fortnight visa cap.",
+      history: [
+        { status: "new", date: "2026-08-19" },
+        { status: "to-apply", date: "2026-08-19" },
+      ],
+      updatedAt: "2026-08-19T21:05:00+10:00",
+    },
+  ),
+
+  "uniqlo-sales-assistant-cbd": createApplicationState("uniqlo-sales-assistant-cbd", {
+    status: "to-apply",
+    notes:
+      "Good rate, but 35 minutes each way. Only worth it for longer weekend shifts, not a 4-hour weekday.",
+    history: [
+      { status: "new", date: "2026-08-20" },
+      { status: "to-apply", date: "2026-08-20" },
+    ],
+    updatedAt: "2026-08-20T19:30:00+10:00",
+  }),
+
+  "unsw-student-ambassador": createApplicationState("unsw-student-ambassador", {
+    status: "tailoring",
+    notes:
+      "Two written responses still to draft — the longest part-time application on the board, but the best hourly rate. Due 4 Sep.",
+    documents: { "Enrolment confirmation": true },
+    history: [
+      { status: "new", date: "2026-08-15" },
+      { status: "to-apply", date: "2026-08-15" },
+      {
+        status: "tailoring",
+        date: "2026-08-20",
+        note: "Started the written responses.",
+      },
+    ],
+    updatedAt: "2026-08-20T22:10:00+10:00",
+  }),
 };

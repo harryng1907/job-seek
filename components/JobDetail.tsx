@@ -5,8 +5,11 @@ import {
   Banknote,
   Briefcase,
   CalendarClock,
+  Clock3,
   ExternalLink,
+  Footprints,
   FileText,
+  FileUser,
   GraduationCap,
   History,
   ListChecks,
@@ -25,13 +28,22 @@ import {
   TimerReset,
   UserRoundPen,
   X,
+  Zap,
 } from "lucide-react";
 import { Badge, PriorityBadge, StatusBadge } from "@/components/ui/Badge";
 import { FitScore } from "@/components/ui/FitScore";
 import { BulletList, EditableSection, Section } from "@/components/ui/Section";
 import { StatusStepper } from "@/components/StatusControls";
 import { describeDeadline, formatDate, formatSalary } from "@/lib/format";
-import { ELIGIBILITY_META, STATUS_META, blockerReason, isIneligible } from "@/lib/job-meta";
+import {
+  EFFORT_META,
+  ELIGIBILITY_META,
+  SCORE_META,
+  STATUS_META,
+  TRACK_META,
+  blockerReason,
+  isIneligible,
+} from "@/lib/job-meta";
 import type {
   ApplicationState,
   ApplicationStatus,
@@ -107,6 +119,7 @@ export function JobDetail({
   onPatch,
   onToggleDocument,
   onAnswer,
+  onTailorCv,
 }: {
   job: TrackedJob;
   today: string;
@@ -115,6 +128,7 @@ export function JobDetail({
   onPatch: (patch: Partial<ApplicationState>) => void;
   onToggleDocument: (document: string) => void;
   onAnswer: (index: number, value: string) => void;
+  onTailorCv: () => void;
 }) {
   const { state } = job;
   const blocked = isIneligible(job);
@@ -153,6 +167,9 @@ export function JobDetail({
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5">
+                  <Badge className={TRACK_META[job.track].className}>
+                    {TRACK_META[job.track].label}
+                  </Badge>
                   <StatusBadge status={state.status} />
                   <PriorityBadge priority={job.priority} />
                   {state.waitingOn ? (
@@ -178,7 +195,13 @@ export function JobDetail({
 
               <div className="flex items-start gap-3">
                 <div className="hidden sm:block">
-                  <FitScore score={job.fitScore} chance={job.chance} size="lg" />
+                  <FitScore
+                    score={job.fitScore}
+                    chance={job.chance}
+                    size="lg"
+                    label={SCORE_META[job.track].label}
+                    title={SCORE_META[job.track].description}
+                  />
                 </div>
                 <button
                   type="button"
@@ -201,6 +224,14 @@ export function JobDetail({
                 Open application
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
+              <button
+                type="button"
+                onClick={onTailorCv}
+                className="border-line bg-surface-2 text-muted hover:text-ink hover:border-line-strong inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm transition-colors"
+              >
+                <FileUser className="h-3.5 w-3.5" />
+                Tailor CV for this job
+              </button>
               <span className="text-faint text-[11px]">
                 Application state is saved locally and is never overwritten by a data
                 refresh.
@@ -304,6 +335,65 @@ export function JobDetail({
                 />
               </div>
             </Section>
+
+            {/* --- Part-time practicalities ----------------------------- */}
+            {job.partTime ? (
+              <Section
+                title="Part-time practicalities"
+                icon={<Clock3 className="h-3.5 w-3.5" />}
+                hint={SCORE_META["part-time"].label + " drivers"}
+              >
+                <div className="border-line bg-surface-2/40 grid gap-4 rounded-lg border p-3.5 sm:grid-cols-2">
+                  <MetaRow
+                    icon={<Banknote className="h-3.5 w-3.5" />}
+                    label="Hourly pay"
+                    value={job.partTime.hourlyPay ?? "Not listed"}
+                    className={job.partTime.hourlyPay ? "text-ink" : "text-faint italic"}
+                  />
+                  <MetaRow
+                    icon={<Footprints className="h-3.5 w-3.5" />}
+                    label="Commute"
+                    value={job.partTime.commute}
+                  />
+                  <MetaRow
+                    icon={<Clock3 className="h-3.5 w-3.5" />}
+                    label="Shift pattern"
+                    value={job.partTime.shiftPattern}
+                  />
+                  <MetaRow
+                    icon={<CalendarClock className="h-3.5 w-3.5" />}
+                    label="Weekend / evening"
+                    value={
+                      job.partTime.weekendEvening
+                        ? "Suits evenings and weekends"
+                        : "Weekday hours only"
+                    }
+                  />
+                  <MetaRow
+                    icon={<Zap className="h-3.5 w-3.5" />}
+                    label="Application effort"
+                    value={EFFORT_META[job.partTime.applicationEffort].label}
+                    className={EFFORT_META[job.partTime.applicationEffort].className}
+                  />
+                  <MetaRow
+                    icon={<ShieldCheck className="h-3.5 w-3.5" />}
+                    label="Within visa hours"
+                    value={
+                      job.partTime.withinVisaHours
+                        ? "Fits the 48-hour fortnight cap"
+                        : "May exceed the 48-hour fortnight cap"
+                    }
+                    className={
+                      job.partTime.withinVisaHours ? "text-ink" : "text-amber-300"
+                    }
+                  />
+                </div>
+                <p className="text-muted mt-3 text-sm leading-relaxed">
+                  <span className="text-faint">Experience required:</span>{" "}
+                  {job.partTime.experienceRequired}
+                </p>
+              </Section>
+            ) : null}
 
             {/* --- Eligibility ------------------------------------------ */}
             <Section

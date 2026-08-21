@@ -43,15 +43,20 @@ export function MetaChip({
   children,
   className = "text-muted",
   title,
+  nowrap = true,
 }: {
   icon?: ReactNode;
   children: ReactNode;
   className?: string;
   title?: string;
+  /** Long values (part-time shift patterns, commutes) need to wrap on mobile. */
+  nowrap?: boolean;
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 text-xs whitespace-nowrap ${className}`}
+      className={`inline-flex max-w-full items-center gap-1.5 text-xs ${
+        nowrap ? "whitespace-nowrap" : ""
+      } ${className}`}
       title={title}
     >
       {icon}

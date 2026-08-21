@@ -16,6 +16,7 @@ export const jobBoard: JobBoard = {
   jobs: [
     {
       id: "hdi-graduate-data-analyst",
+      track: "graduate",
       company: "HDI Global",
       title: "Graduate Data Analyst",
       location: "Sydney CBD, NSW",
@@ -28,7 +29,7 @@ export const jobBoard: JobBoard = {
       visaFit: {
         level: "likely",
         hardRequirement: false,
-        note: "Asks for ongoing work rights in Australia. A 485 post-study work visa should satisfy this for a permanent graduate role — state the remaining visa term in the form.",
+        note: "Asks for ongoing work rights in Australia. Currently on a Student Visa (subclass 500) with a 48-hour fortnight cap; a graduate role starting after the December 2026 completion would run on a 485. Confirm the employer accepts a 485 rather than PR.",
       },
       gradeRequirement: {
         level: "eligible",
@@ -93,6 +94,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "macquarie-data-quality-analyst",
+      track: "graduate",
       company: "Macquarie Group",
       title: "Data Analyst — Data Quality & Remediation",
       location: "Sydney, NSW (hybrid)",
@@ -167,6 +169,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "ghd-graduate-program-2026",
+      track: "graduate",
       company: "GHD",
       title: "Graduate Program 2026/27 — Asset Management / Data Science",
       location: "Sydney, NSW",
@@ -179,7 +182,7 @@ export const jobBoard: JobBoard = {
       visaFit: {
         level: "unclear",
         hardRequirement: false,
-        note: "Posting asks for unrestricted working rights. Whether a 485 qualifies is not stated — email graduate recruitment before spending a day on the application.",
+        note: "Posting asks for unrestricted working rights. Currently Student Visa (subclass 500), moving to a 485 after December 2026 — whether that counts as 'unrestricted' is not stated. Email graduate recruitment before spending a day on the application.",
       },
       gradeRequirement: {
         level: "eligible",
@@ -247,6 +250,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "earth-ai-graduate-ai-engineer",
+      track: "graduate",
       company: "Earth AI",
       title: "Graduate AI Engineer",
       location: "Alexandria, NSW (on-site)",
@@ -321,6 +325,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "pharmacare-business-analyst-graduate",
+      track: "graduate",
       company: "PharmaCare",
       title: "Business Analyst (Graduate)",
       location: "Warriewood, NSW",
@@ -391,6 +396,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "woolloo-graduate-ai-data-product",
+      track: "graduate",
       company: "Woolloo",
       title: "Graduate — AI / Data / Product",
       location: "Barangaroo, NSW",
@@ -471,6 +477,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "whitehaven-graduate-data-engineer",
+      track: "graduate",
       company: "Whitehaven Coal",
       title: "Graduate Data Engineer",
       location: "Newcastle, NSW (hybrid)",
@@ -522,6 +529,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "ey-graduate-international-eoi",
+      track: "graduate",
       company: "EY",
       title: "Graduate Program — International Student EOI",
       location: "Sydney, NSW",
@@ -596,6 +604,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "usyd-ai-graduate",
+      track: "graduate",
       company: "The University of Sydney",
       title: "AI Graduate",
       location: "Camperdown, NSW",
@@ -662,6 +671,7 @@ export const jobBoard: JobBoard = {
     },
     {
       id: "suncorp-technology-data-science-graduate",
+      track: "graduate",
       company: "Suncorp Group",
       title: "Technology & Data Science Graduate — Data Science stream",
       location: "Sydney, NSW (hybrid)",
@@ -674,7 +684,7 @@ export const jobBoard: JobBoard = {
       visaFit: {
         level: "unclear",
         hardRequirement: false,
-        note: "Program asks for work rights covering the full two-year rotation. Confirm the 485 end date is acceptable before the assessment centre — better raised now than at offer.",
+        note: "Program asks for work rights covering the full two-year rotation. A 485 following the December 2026 completion may not cover both years — raise it before the assessment centre rather than at offer.",
       },
       gradeRequirement: {
         level: "eligible",
@@ -734,6 +744,337 @@ export const jobBoard: JobBoard = {
         "Explaining a model to a claims manager",
       ],
       sourceNotes: "Timed online assessment; practice numerical and situational tests beforehand.",
+    },
+
+    // -----------------------------------------------------------------------
+    // Part-time / income track
+    //
+    // Scored on completely different criteria from the graduate roles above:
+    // commute, realistic availability, hourly pay, casual/part-time status,
+    // weekend and evening flexibility, how fast the application is, and whether
+    // prior retail experience is required. A 9 here is not a 9 above.
+    // -----------------------------------------------------------------------
+    {
+      id: "arc-unsw-retail-assistant",
+      track: "part-time",
+      company: "Arc @UNSW",
+      title: "Retail Assistant — Arc Retail",
+      location: "Kensington, NSW (UNSW campus)",
+      employmentType: "Part-time",
+      roleType: "Campus",
+      salary: "$28.50/hr casual + penalty rates",
+      priority: "apply-asap",
+      fitScore: 9,
+      chance: "strong",
+      partTime: {
+        hourlyPay: "$28.50/hr casual + penalty rates",
+        commute: "On campus — already there for classes, no extra travel",
+        shiftPattern: "Casual — 2–3 shifts per week, rostered around your timetable",
+        weekendEvening: true,
+        experienceRequired:
+          "No prior retail experience required; existing Arc volunteering is directly relevant",
+        withinVisaHours: true,
+        applicationEffort: "quick",
+      },
+      visaFit: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "Student Visa (subclass 500) work rights are standard for campus roles. Rostered hours sit well inside the 48-hour fortnight cap.",
+      },
+      gradeRequirement: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "No academic requirement — you must be a currently enrolled UNSW student, which you are.",
+      },
+      deadline: "2026-08-28",
+      dateDiscovered: "2026-08-21",
+      summary:
+        "Casual retail assistant in the Arc campus store: serving students, restocking, merchandising and point-of-sale. Rosters are built around class timetables and the store closes with campus hours, so no late-night trading.",
+      whyFit: [
+        "Already volunteering with Arc at Food Hub and Checkpoint — known to the organisation and the environment.",
+        "Zero commute cost: shifts slot between classes on the same campus.",
+        "Roster is explicitly built around student timetables.",
+      ],
+      gaps: [
+        "No paid retail experience — all customer-facing work so far has been volunteer.",
+        "Campus store closes over the summer break, so hours drop off in December.",
+      ],
+      submit: [
+        "Short online form",
+        "Retail CV (1–2 pages)",
+        "Student number and enrolment confirmation",
+      ],
+      assessment: ["Application review", "Informal interview with the store supervisor"],
+      applicationUrl: "https://www.arc.unsw.edu.au/employment",
+      cvStrategy:
+        "Lead with the Arc volunteering — same organisation, same kind of work. Keep the data projects off entirely; they add length without adding relevance. One page is enough.",
+      suggestedTailoredSummary:
+        "Current UNSW student and Arc volunteer with hands-on customer service experience at Food Hub and Checkpoint, looking for casual retail hours that fit around a Data Science timetable.",
+      suggestedCvBullets: [
+        "Assisted 1000+ customers per shift with product recommendations and responsive customer service in a fast-paced retail environment",
+        "Replenished stock, organised displays, tagged products, and maintained visual presentation standards",
+        "Completed 70+ service hours for official AHEGS recognition",
+      ],
+      coverLetterNeeded: false,
+      suggestedCoverLetterAngle:
+        "No cover letter needed. If there is a free-text box, use two sentences: existing Arc volunteering, and availability across weekdays between classes.",
+      applicationQuestions: [
+        {
+          question: "What is your availability?",
+          suggestedDraft:
+            "Available weekdays between classes and across weekends, including late trading and public holidays. Student visa conditions cap me at 48 hours per fortnight, which comfortably covers a 2–3 shift week.",
+        },
+      ],
+      interviewThemes: [
+        "Handling a busy counter during lunch rush",
+        "Existing Arc volunteering — what you actually did",
+        "Availability and timetable clashes",
+      ],
+      sourceNotes: "Campus employer; applications reviewed weekly during term.",
+    },
+    {
+      id: "woolworths-campsie-customer-service",
+      track: "part-time",
+      company: "Woolworths",
+      title: "Customer Service Team Member",
+      location: "Campsie, NSW",
+      employmentType: "Part-time",
+      roleType: "Customer Service",
+      salary: "$26.80/hr + weekend and evening penalties",
+      priority: "apply-asap",
+      fitScore: 8,
+      chance: "strong",
+      partTime: {
+        hourlyPay: "$26.80/hr + weekend and evening penalties",
+        commute: "~10 minute walk from home in Campsie",
+        shiftPattern: "Part-time — 12–20 hours per week across a rotating roster",
+        weekendEvening: true,
+        experienceRequired: "No experience required — full training provided",
+        withinVisaHours: true,
+        applicationEffort: "quick",
+      },
+      visaFit: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "Student Visa (subclass 500) accepted. 12–20 hours per week is at the top of the 48-hour fortnight cap — check the roster does not push over it in a busy fortnight.",
+      },
+      gradeRequirement: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "No academic requirement.",
+      },
+      deadline: null,
+      deadlineNote: "Rolling — stores hire continuously",
+      dateDiscovered: "2026-08-19",
+      summary:
+        "Front-of-store customer service in a large supermarket: checkouts, self-serve assistance, online order pick-packing and floor replenishment. Rotating roster with guaranteed part-time hours rather than casual.",
+      whyFit: [
+        "Ten minutes from home — the shortest commute of anything on the board.",
+        "Guaranteed part-time hours rather than casual, so income is predictable.",
+        "No prior paid retail experience required.",
+      ],
+      gaps: [
+        "Rotating roster may clash with fixed class times — needs a firm availability conversation up front.",
+        "20 hours a week sits close to the 48-hour fortnight visa cap.",
+      ],
+      submit: ["Online application form", "Retail CV", "Availability grid"],
+      assessment: [
+        "Online application and availability form",
+        "Digital interview (recorded, ~15 min)",
+        "Store manager interview",
+      ],
+      applicationUrl: "https://wowcareers.com.au/",
+      cvStrategy:
+        "One page, customer service first. Use the Arc Food Hub and Checkpoint bullets — high customer volumes are exactly what a supermarket is checking for. No projects, no technical skills section.",
+      suggestedTailoredSummary:
+        "Customer-focused student with volunteer retail and customer service experience in high-volume campus environments, available across weekends, evenings and public holidays.",
+      suggestedCvBullets: [
+        "Assisted 1000+ customers per shift with product recommendations and responsive customer service in a fast-paced retail environment",
+        "Maintained store cleanliness, product presentation, and stock organisation during busy trading periods",
+        "Collaborated with volunteer team of 30 people to set up, run, and pack down distribution hub",
+      ],
+      coverLetterNeeded: false,
+      suggestedCoverLetterAngle: "Not required — the availability grid does the work.",
+      applicationQuestions: [
+        {
+          question: "Describe a time you helped a difficult customer.",
+          suggestedDraft:
+            "At the Arc Food Hub a student arrived after stock had run out and was upset. I explained what was left, offered an alternative, and told them the restock time so they could come back — they did. Being specific and honest defused it faster than apologising would have.",
+        },
+      ],
+      interviewThemes: [
+        "Availability and roster flexibility",
+        "Handling a queue under time pressure",
+        "Why supermarket retail",
+      ],
+      sourceNotes: "High-volume employer; digital interview stage is automated.",
+    },
+    {
+      id: "uniqlo-sales-assistant-cbd",
+      track: "part-time",
+      company: "UNIQLO",
+      title: "Sales Assistant (Casual)",
+      location: "Sydney CBD, NSW",
+      employmentType: "Part-time",
+      roleType: "Sales Assistant",
+      salary: "$27.10/hr + penalty rates",
+      priority: "worth-applying",
+      fitScore: 7,
+      chance: "reasonable",
+      partTime: {
+        hourlyPay: "$27.10/hr + penalty rates",
+        commute: "~35 minutes by train from Campsie",
+        shiftPattern: "Casual — minimum two shifts per week, one weekend day required",
+        weekendEvening: true,
+        experienceRequired: "Retail experience preferred but not required",
+        withinVisaHours: true,
+        applicationEffort: "standard",
+      },
+      visaFit: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "Student Visa (subclass 500) accepted for casual retail. Two shifts per week sits well inside the 48-hour fortnight cap.",
+      },
+      gradeRequirement: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "No academic requirement.",
+      },
+      deadline: null,
+      deadlineNote: "Rolling — recruits ahead of peak trading",
+      dateDiscovered: "2026-08-20",
+      summary:
+        "Casual sales assistant on a busy CBD flagship floor: customer service, fitting room support, sizing and styling advice, stock replenishment and visual standards. Strong emphasis on service scripts and store presentation.",
+      whyFit: [
+        "Styling, sizing and merchandising language on the retail CV maps directly onto this role.",
+        "Penalty rates on weekends make a small number of shifts worth more.",
+        "Large employer — a reference from here helps every later retail application.",
+      ],
+      gaps: [
+        "35-minute each-way commute eats into a short shift.",
+        "Prefers prior paid retail experience; yours is volunteer.",
+        "CBD flagship rosters are competitive around exam periods.",
+      ],
+      submit: ["Online application", "Retail CV", "Availability declaration"],
+      assessment: [
+        "Online application",
+        "Group assessment / store trial",
+        "Manager interview",
+      ],
+      applicationUrl: "https://www.uniqlo.com/au/en/company/careers",
+      cvStrategy:
+        "Retail CV with the merchandising and presentation bullets pulled to the top. Keep the 'luxury customer service mindset' and styling language — it matches how this employer writes about the floor.",
+      suggestedTailoredSummary:
+        "Customer-focused retail assistant with experience in fast-paced, high-volume service environments, comfortable with product recommendations, sizing support and maintaining visual merchandising standards.",
+      suggestedCvBullets: [
+        "Replenished stock, organised displays, tagged products, and maintained visual presentation standards",
+        "Delivered friendly customer service to 500+ students daily while assisting with product selection and recommendations",
+        "Coordinated merchandise design and promotional campaigns, supporting customer engagement and product sales during student events",
+      ],
+      coverLetterNeeded: false,
+      suggestedCoverLetterAngle:
+        "Not required. The group assessment matters far more — prepare to be visibly helpful rather than quietly competent.",
+      applicationQuestions: [
+        {
+          question: "Why do you want to work for this brand?",
+          suggestedDraft:
+            "The floor runs on consistency — sizing, folding, replenishment and service all follow a standard, and I like environments where the standard is explicit. My volunteer retail work was in a similar high-volume setting where presentation slipped the moment anyone stopped paying attention.",
+        },
+      ],
+      interviewThemes: [
+        "Group assessment: be helpful and visible",
+        "Sizing and styling advice for an unsure customer",
+        "Weekend and peak-trading availability",
+      ],
+      sourceNotes: "Group assessment stage; hires in batches ahead of peak trading.",
+    },
+    {
+      id: "unsw-student-ambassador",
+      track: "part-time",
+      company: "UNSW Sydney",
+      title: "Casual Student Ambassador",
+      location: "Kensington, NSW (UNSW campus)",
+      employmentType: "Part-time",
+      roleType: "Campus",
+      salary: "$41.25/hr casual",
+      priority: "worth-applying",
+      fitScore: 7,
+      chance: "reasonable",
+      partTime: {
+        hourlyPay: "$41.25/hr casual — the highest rate on the part-time board",
+        commute: "On campus",
+        shiftPattern: "Casual — event-based, bursty around open days and orientation",
+        weekendEvening: true,
+        experienceRequired:
+          "Current UNSW student with confident public speaking; no retail experience needed",
+        withinVisaHours: true,
+        applicationEffort: "long",
+      },
+      visaFit: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "University casual employment, Student Visa (subclass 500) standard. Event-based hours are irregular — track the fortnightly total during open-day periods.",
+      },
+      gradeRequirement: {
+        level: "eligible",
+        hardRequirement: false,
+        note: "Must be a currently enrolled UNSW student in good standing. No WAM requirement published.",
+      },
+      deadline: "2026-09-04",
+      dateDiscovered: "2026-08-15",
+      summary:
+        "Casual ambassador role representing the university at open days, campus tours, school visits and orientation events. Work is talking to prospective students and families, running activities and staffing information desks.",
+      whyFit: [
+        "Highest hourly rate of any part-time role on the board, on campus.",
+        "Marketing subcommittee and Food Hub experience both demonstrate student-facing communication.",
+        "Event work clusters on weekends, so it rarely clashes with classes.",
+      ],
+      gaps: [
+        "Hours are irregular and seasonal — not reliable income between event peaks.",
+        "Application is the longest on the part-time board: written responses plus a group interview.",
+      ],
+      submit: [
+        "Online application",
+        "CV",
+        "Two written responses (200 words each)",
+        "Enrolment confirmation",
+      ],
+      assessment: [
+        "Written application",
+        "Group interview / activity",
+        "Compulsory paid training day",
+      ],
+      applicationUrl: "https://www.unsw.edu.au/employment",
+      cvStrategy:
+        "Mix the two families: keep the retail customer-service bullets, but add the Marketing Subcommittee work with the reach and growth metrics — this role is student engagement, so both halves count.",
+      suggestedTailoredSummary:
+        "UNSW Data Science student and Arc volunteer with experience engaging large student audiences, from campus service to running social media campaigns for a student society.",
+      suggestedCvBullets: [
+        "Managed Facebook & Instagram content strategy, achieving +300% reach and +160% follower growth",
+        "Delivered friendly customer service to 500+ students daily while assisting with product selection and recommendations",
+        "Collaborate with a 5-member team to deliver campaigns on schedule, strengthening engagement outcomes",
+      ],
+      coverLetterNeeded: false,
+      suggestedCoverLetterAngle:
+        "No letter, but the two written responses carry the same weight. Draft them properly — specific examples of talking to strangers beat enthusiasm.",
+      applicationQuestions: [
+        {
+          question: "Why do you want to represent UNSW?",
+          suggestedDraft:
+            "I arrived as an international student and the people who answered my questions early made a disproportionate difference. Open days are where that happens for the next intake, and I can speak to the international student experience specifically rather than in general terms.",
+        },
+        {
+          question: "Describe a time you communicated with a large group.",
+          suggestedDraft:
+            "Running the Food Hub distribution shifts meant explaining the same process to a queue of hundreds of students, most of them in a hurry. I learnt to lead with the one thing they needed to do next rather than the full explanation.",
+        },
+      ],
+      interviewThemes: [
+        "Group activity — include others rather than dominate",
+        "Talking to a nervous prospective student and their parent",
+        "Availability across open days and orientation weeks",
+      ],
+      sourceNotes: "Seasonal intake; training day is compulsory and paid.",
     },
   ],
 };

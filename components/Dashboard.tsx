@@ -2,28 +2,36 @@
 
 import { useMemo, useState } from "react";
 import { Inbox, RotateCcw } from "lucide-react";
+import { CvBuilder } from "@/components/cv/CvBuilder";
 import { Filters } from "@/components/Filters";
 import { Header } from "@/components/Header";
 import { JobCard } from "@/components/JobCard";
 import { JobDetail } from "@/components/JobDetail";
 import { SummaryCards } from "@/components/SummaryCards";
 import { Tabs } from "@/components/Tabs";
+import { TrackFilter } from "@/components/TrackFilter";
 import { mergeJobsWithState } from "@/lib/application-state";
 import { toISODate } from "@/lib/format";
 import {
   EMPTY_FILTERS,
   countActiveFilters,
+  filterByTrack,
   filterJobs,
   filterOptions,
+  isPipelineTab,
   jobsForTab,
   sortForTab,
   summarise,
   tabCounts,
+  trackViewCounts,
   type JobFilters,
   type TabId,
+  type TrackView,
+  type ViewId,
 } from "@/lib/jobs";
 import { useApplicationState } from "@/lib/use-application-state";
-import type { ApplicationStateMap } from "@/types/application";
+import { useCvConfigurations } from "@/lib/use-cv-configurations";
+import type { ApplicationStateMap, TrackedJob } from "@/types/application";
 import type { JobBoard } from "@/types/job";
 
 const TAB_EMPTY_MESSAGE: Record<TabId, string> = {
@@ -44,11 +52,18 @@ export function Dashboard({
 }) {
   const { states, setStatus, patchState, toggleDocument, setAnswer, resetAll } =
     useApplicationState(seedState);
+  const { ensureForJob } = useCvConfigurations();
 
-  const [tab, setTab] = useState<TabId>("today");
+  const [view, setView] = useState<ViewId>("today");
+  const [trackView, setTrackView] = useState<TrackView>("all");
   const [filters, setFilters] = useState<JobFilters>(EMPTY_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activeConfigId, setActiveConfigId] = useState<string | null>(null);
+
+  const isCvBuilder = view === "cv-builder";
+  /** The pipeline tab the job list should use; the CV builder has none. */
+  const tab: TabId = isPipelineTab(view) ? view : "today";
 
   /**
    * "Today" is the date of the last pipeline refresh rather than the browser
@@ -62,17 +77,32 @@ export function Dashboard({
     [board.jobs, states],
   );
 
-  const counts = useMemo(() => summarise(jobs, today), [jobs, today]);
-  const perTab = useMemo(() => tabCounts(jobs, today), [jobs, today]);
-  const options = useMemo(() => filterOptions(jobs), [jobs]);
+  /** The track selector narrows everything below it: counts, tabs and lists. */
+  const tracked = useMemo(() => filterByTrack(jobs, trackView), [jobs, trackView]);
+
+  const counts = useMemo(() => summarise(tracked, today), [tracked, today]);
+  const perTab = useMemo(() => tabCounts(tracked, today), [tracked, today]);
+  const perTrack = useMemo(() => trackViewCounts(jobs), [jobs]);
+  const options = useMemo(() => filterOptions(tracked), [tracked]);
 
   const visible = useMemo(
-    () => sortForTab(filterJobs(jobsForTab(jobs, tab, today), filters), tab),
-    [jobs, tab, today, filters],
+    () => sortForTab(filterJobs(jobsForTab(tracked, tab, today), filters), tab),
+    [tracked, tab, today, filters],
   );
 
   const selected = jobs.find((job) => job.id === selectedId) ?? null;
   const activeFilterCount = countActiveFilters(filters);
+
+  /**
+   * "Tailor CV for this job": open the builder on the version for this job,
+   * creating one if needed. The base CV family is chosen from the job's track —
+   * a retail role starts from the retail CV — and can be changed in the builder.
+   */
+  const tailorCvFor = (job: TrackedJob) => {
+    setActiveConfigId(ensureForJob(job, `${job.company} — ${job.title}`));
+    setSelectedId(null);
+    setView("cv-builder");
+  };
 
   return (
     <div className="min-h-full">
@@ -86,9 +116,24 @@ export function Dashboard({
       />
 
       <main className="mx-auto max-w-[1400px] space-y-5 px-4 py-5 sm:px-6 sm:py-6">
-        <SummaryCards counts={counts} activeTab={tab} onSelect={setTab} />
+        {!isCvBuilder ? (
+          <>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <TrackFilter
+                active={trackView}
+                counts={perTrack}
+                onChange={setTrackView}
+              />
+              <p className="text-faint text-[11px]">
+                Graduate and part-time roles are scored on different criteria — the
+                numbers are not comparable across tracks.
+              </p>
+            </div>
+            <SummaryCards counts={counts} activeTab={view} onSelect={setView} />
+          </>
+        ) : null}
 
-        {filtersOpen ? (
+        {filtersOpen && !isCvBuilder ? (
           <Filters
             filters={filters}
             options={options}
@@ -100,9 +145,15 @@ export function Dashboard({
         ) : null}
 
         <div className="space-y-4">
-          <Tabs active={tab} counts={perTab} onChange={setTab} />
+          <Tabs active={view} counts={perTab} onChange={setView} />
 
-          {visible.length ? (
+          {isCvBuilder ? (
+            <CvBuilder
+              jobs={jobs}
+              activeConfigId={activeConfigId}
+              onSelectConfig={setActiveConfigId}
+            />
+          ) : visible.length ? (
             <div className="grid gap-2.5 2xl:grid-cols-2">
               {visible.map((job) => (
                 <JobCard
@@ -137,8 +188,8 @@ export function Dashboard({
 
         <footer className="border-line text-faint flex flex-wrap items-center justify-between gap-3 border-t pt-4 text-[11px]">
           <p>
-            Job data is refreshed by the pipeline; statuses, drafts and notes are yours
-            and are stored in this browser.
+            Job data is refreshed by the pipeline; statuses, drafts, notes and CV versions
+            are yours and are stored in this browser.
           </p>
           <button
             type="button"
@@ -168,6 +219,7 @@ export function Dashboard({
           onPatch={(patch) => patchState(selected.id, patch)}
           onToggleDocument={(document) => toggleDocument(selected.id, document)}
           onAnswer={(index, value) => setAnswer(selected.id, index, value)}
+          onTailorCv={() => tailorCvFor(selected)}
         />
       ) : null}
     </div>

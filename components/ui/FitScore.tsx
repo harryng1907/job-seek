@@ -9,16 +9,26 @@ export function FitScore({
   score,
   chance,
   size = "sm",
+  label,
+  title,
 }: {
   score: number;
   chance?: Chance;
   size?: "sm" | "lg";
+  /** What the score measures on this track, e.g. "Career fit". */
+  label?: string;
+  title?: string;
 }) {
   const tone = fitScoreTone(score);
   const segments = Array.from({ length: 10 }, (_, i) => i < score);
 
   return (
-    <div className="flex flex-col items-end gap-1.5">
+    <div className="flex flex-col items-end gap-1.5" title={title}>
+      {label ? (
+        <span className="text-faint text-[10px] leading-none tracking-wide uppercase">
+          {label}
+        </span>
+      ) : null}
       <div className="flex items-baseline gap-1">
         <span
           className={`font-semibold tabular-nums ${tone.text} ${

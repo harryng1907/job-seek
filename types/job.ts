@@ -10,6 +10,16 @@
  * so a refreshed payload can come straight out of `JSON.parse()`.
  */
 
+/**
+ * Which search a job belongs to.
+ *
+ * The two tracks are scored on different criteria and their scores are never
+ * comparable: a 9 on the graduate track means "strong career fit", a 9 on the
+ * part-time track means "easy to get, close to home, flexible hours". The UI
+ * labels them differently and never ranks them in one list.
+ */
+export type JobTrack = "graduate" | "part-time";
+
 /** How urgently the role should be actioned. Scored by the pipeline. */
 export type Priority = "apply-asap" | "worth-applying" | "maybe" | "skip";
 
@@ -23,7 +33,7 @@ export type EmploymentType =
   | "Contract"
   | "Internship";
 
-/** Used by the role-type filter. */
+/** Used by the role-type filter. Graduate types first, then part-time types. */
 export type RoleType =
   | "Data Science"
   | "Data Engineering"
@@ -31,7 +41,38 @@ export type RoleType =
   | "AI / ML"
   | "BI"
   | "Business Analysis"
-  | "Product";
+  | "Product"
+  | "Retail"
+  | "Customer Service"
+  | "Sales Assistant"
+  | "Campus"
+  | "Hospitality";
+
+/** How quickly an application can realistically be submitted. */
+export type ApplicationEffort = "quick" | "standard" | "long";
+
+/**
+ * Part-time scoring inputs.
+ *
+ * These are what the `fitScore` means on the part-time track — commute,
+ * availability, pay, flexibility and how fast the application is — rather than
+ * career progression. Present only on part-time jobs.
+ */
+export interface PartTimeFactors {
+  /** e.g. "$27.50/hr + penalties", or `null` when not listed. */
+  hourlyPay: string | null;
+  /** Travel from home, in plain words. */
+  commute: string;
+  /** e.g. "Casual — 2–3 shifts per week". */
+  shiftPattern: string;
+  /** Whether the roster suits evenings and weekends around classes. */
+  weekendEvening: boolean;
+  /** What the posting asks for, e.g. "Prior retail experience preferred". */
+  experienceRequired: string;
+  /** Whether the visa work limit is compatible with the advertised hours. */
+  withinVisaHours: boolean;
+  applicationEffort: ApplicationEffort;
+}
 
 /**
  * Eligibility levels.
@@ -61,6 +102,8 @@ export interface ApplicationQuestion {
 
 export interface Job {
   id: string;
+  /** Which search this belongs to. Drives scoring meaning and the track filter. */
+  track: JobTrack;
 
   // --- Identity -----------------------------------------------------------
   company: string;
@@ -73,9 +116,14 @@ export interface Job {
 
   // --- Scoring ------------------------------------------------------------
   priority: Priority;
-  /** 0–10. */
+  /**
+   * 0–10, scored against the criteria for this job's track. Never compare a
+   * graduate score to a part-time one — see `JobTrack`.
+   */
   fitScore: number;
   chance: Chance;
+  /** Present on part-time roles; drives what the card shows instead of grades. */
+  partTime?: PartTimeFactors;
 
   // --- Eligibility --------------------------------------------------------
   visaFit: Eligibility;
