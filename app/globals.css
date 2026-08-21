@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Job Seek is a dark-first dashboard: one committed palette rather than a
+ * light/dark pair. Semantic tokens are declared here so components use
+ * `bg-surface` / `text-muted` instead of scattering raw zinc values.
+ */
+@theme {
+  --color-canvas: #08090a;
+  --color-surface: #0d0e10;
+  --color-surface-2: #131418;
+  --color-line: #1e2024;
+  --color-line-strong: #2b2e34;
+  --color-ink: #e8eaed;
+  --color-muted: #9096a0;
+  --color-faint: #62676f;
+  --color-accent: #7c8bff;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+}
+
+/* Quiet scrollbars — the default light track is jarring on a dark canvas. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-line-strong);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Consistent focus ring for keyboard users, suppressed for mouse clicks. */
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--color-accent) 70%, transparent);
+  outline-offset: 2px;
+}
+
+@keyframes job-seek-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes job-seek-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: job-seek-fade-in 0.15s ease-out both;
+}
+
+.animate-rise {
+  animation: job-seek-rise 0.2s cubic-bezier(0.2, 0.8, 0.3, 1) both;
 }
